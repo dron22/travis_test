@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import requests
+
 
 def multiply(x, y):
     return x * y
