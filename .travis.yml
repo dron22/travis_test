@@ -3,8 +3,9 @@ python:
     - "2.7"
 script: tox
 env:
-    - ES_VERSION=2.3.2
+    - ESV=2.3.2
+    - ESV=1.7.4
 before_install:
-    if [[ $ES_VERSION == '2.3.2' ]]; then curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-2.3.2.deb && sudo dpkg -i --force-confnew elasticsearch-2.3.2.deb && sudo service elasticsearch restart; fi
+    if [[ $ESV == '2.3.2' ]]; then URL="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-2.3.2.deb" elif [[ $ES_VERSION == '1.7.4' ]]; then URL="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.4.deb"; fi; curl -O $LINK && sudo dpkg -i --force-confnew elasticsearch-${ESV}.deb && sudo service elasticsearch restart
 before_script:
   - sleep 10
