@@ -1,11 +1,11 @@
 language: python
 python:
     - "2.7"
-script: tox
+script: echo "tox" | newgrp elasticsearch
 env:
     - ESV=2.3.2
     - ESV=1.7.4
 before_install:
-    if [[ $ESV == '2.3.2' ]]; then URL="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-2.3.2.deb"; elif [[ $ESV == '1.7.4' ]]; then URL="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.4.deb"; fi; curl -O $URL && sudo dpkg -i --force-confnew elasticsearch-${ESV}.deb && sudo service elasticsearch restart
+    - if [[ $ESV == '2.3.2' ]]; then URL="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-2.3.2.deb"; elif [[ $ESV == '1.7.4' ]]; then URL="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.4.deb"; fi; curl -O $URL && sudo dpkg -i --force-confnew elasticsearch-${ESV}.deb && sudo service elasticsearch restart; if ! [[ $(groups) =~ " elasticsearch " ]]; then sudo adduser $USER elasticsearch; fi
 before_script:
-  - sleep 10
+  - sleep 5
