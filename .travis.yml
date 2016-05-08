@@ -1,7 +1,7 @@
 language: python
 python:
     - "2.7"
-script: sudo -E su $USER -c "source $ACTIVATE; tox"
+script: sudo -E su $USER -c "source $VIRTUAL_ENV/bin/activate; tox"
 env:
     - ESV=2.3.2 ES_URL="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-2.3.2.deb"
     - ESV=1.7.4 ES_URL="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.4.deb"
@@ -11,8 +11,12 @@ before_install:
     - curl -O $ES_URL
     - sudo dpkg -i --force-confnew elasticsearch-${ESV}.deb
     - sudo service elasticsearch restart
+before_script:
+    # - sudo chown -R root:root /usr/share/elasticsearch
+    # - sudo chown -R root:root /etc/elasticsearch
+    # - sudo service elasticsearch restart
     - sudo usermod -G elasticsearch $USER
-    - ls -l /usr/share/elasticsearch 
-    - ls -l /etc/elasticsearch 
-    - PY="$(python --version 2>&1 | cut -d " " -f 2 | cut -d "." -f 1,2)"
-    - ACTIVATE="~/virtualenv/python${PY}/bin/activate"
+    # - ls -l /usr/share/elasticsearch 
+    # - ls -l /etc/elasticsearch 
+    #- PY="$(python --version 2>&1 | cut -d " " -f 2 | cut -d "." -f 1,2)"
+    # - ACTIVATE="~/virtualenv/python${PY}/bin/activate"
